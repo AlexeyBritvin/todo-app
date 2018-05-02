@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import ToDoForm from './ToDoForm';
 import ToDoList from './ToDoList';
+import Header from './Header';
 import '../styles/App.css';
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <ToDoForm addToDo={this.addToDo} />
+        <Header addToDo={this.addToDo} />
         <ToDoList todos={this.state.todos} />
       </div>
     );
