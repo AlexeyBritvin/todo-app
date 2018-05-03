@@ -17,6 +17,19 @@ class App extends Component {
     this.setState({ todos: [...this.state.todos, todo] });
   }
 
+  deleteToDo = index => {
+    const todos = [...this.state.todos];
+    todos.splice(index, 1);
+    this.setState({ todos });
+  }
+
+  completeTask = index => {
+    const todos = [...this.state.todos];
+    const todo = todos[index];
+    todo.complete = !todo.complete;
+    this.setState({ todos });
+  }
+
   componentDidMount() {
     this.loadSamples();
   }
@@ -25,7 +38,7 @@ class App extends Component {
     return (
       <div className="app">
         <Header addToDo={this.addToDo} />
-        <ToDoList todos={this.state.todos} />
+        <ToDoList todos={this.state.todos} deleteToDo={this.deleteToDo} completeTask={this.completeTask} />
       </div>
     );
   }
