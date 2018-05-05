@@ -6,32 +6,26 @@ import Icon from 'material-ui/Icon';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 class TodoItem extends Component {
-  // state = {...this.props.todo, complete: false}
-
-  handleChange = event => {
-    const complete = this.state.complete;
-    this.setState({ complete: !complete });
+  handleEditClick = () => {
+    this.props.openTodoForm({ todo: this.props.todo, index: this.props.index, isEditing: true });
   }
 
   render() {
-    const todo = this.props.todo;
     return (
       <ListItem
         key={this.props.index}
         button
-        onClick={() => this.props.completeTask(this.props.index)}
-      >
+        onClick={() => this.props.completeTask(this.props.index)}>
         <Checkbox
           tabIndex={-1}
           disableRipple
-          checked={todo.complete}
-          onChange={() => this.props.completeTask(this.props.index)}
+          checked={this.props.todo.complete}
         />
-        <ListItemText primary={todo.title} secondary={todo.description}>
-        <span className="todo-item__date">{todo.date}</span>
+        <ListItemText primary={this.props.todo.title} secondary={this.props.todo.description}>
+        <span className="todo-item__date">{this.props.todo.date}</span>
         </ListItemText>
         <ListItemSecondaryAction>
-          <IconButton aria-label="edit">
+          <IconButton aria-label="edit" onClick={this.handleEditClick} >
             <Icon>edit_icon</Icon>
           </IconButton>
           <IconButton aria-label="Delete" onClick={() => this.props.deleteToDo(this.props.index)}>

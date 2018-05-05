@@ -9,73 +9,94 @@ import Dialog, {
 import { FormControl } from 'material-ui/Form';
 import { InputLabel } from 'material-ui/Input';
 import Select from 'material-ui/Select';
+import {getRandom} from '../helpers';
 
 
-class DialogForm extends Component {
+class TodoForm extends Component {
   state = {
     title: '',
     description: '',
     importance: '',
-    date: ''
+    date: '',
+    complete: false
    }
 
-  handleChange = name => event => {
-    this.setState({ [name]: event.target.value });
+  handleChange = event => {
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   onSubmit = event => {
     event.preventDefault();
-    const todo = {...this.state};
-    this.props.addToDo(todo);
-    this.setState({
-      title: '',
-      description: '',
-      importance: '',
-      date: ''
-    });
+    if (this.props.todo !== null) {
+      const updatedTask = {...this.state};
+      this.props.updateTask(updatedTask);
+    } else {
+      const todo = {...this.state};
+      todo.id = getRandom();
+      this.props.addToDo(todo);
+      this.setState({
+        title: '',
+        description: '',
+        importance: '',
+        date: ''
+      });
+    }
     this.props.dialogCLose();
   };
 
+  componentDidMount() {
+    if (this.props.todo !== null) {
+      this.setState({...this.props.todo});
+    }
+  }
+
   render() {
+    const isEditing = this.props.isEditing;
+
     return (
       <Dialog
-          open={this.props.dialogOpen}
-          aria-labelledby="form-dialog-title"
-        >
-          <DialogTitle id="form-dialog-title">New Todo</DialogTitle>
+          open={this.props.isOpen}
+          aria-labelledby="form-dialog-title">
+          <DialogTitle id="form-dialog-title">{isEditing? 'Edit' : 'New'} Todo</DialogTitle>
           <form action="" className="todo-form" onSubmit={this.onSubmit}>
             <DialogContentText className="todo-form__title">
-              Please, enter the title, description and the date
+              Please,
+              {isEditing? ' update ' : ' enter '}
+              the title and the date
             </DialogContentText>
             <TextField
               className="form-control"
+              value={this.state.title}
               autoFocus
               margin="dense"
               id="name"
               label="Title"
               type="text"
               fullWidth
-              onChange={this.handleChange('title')}
+              name="title"
+              required
+              onChange={this.handleChange}
             />
             <TextField
               className="form-control"
+              value={this.state.description}
               margin="dense"
               id="name"
               label="Description"
               type="text"
               fullWidth
-              onChange={this.handleChange('description')}
+              name="description"
+              onChange={this.handleChange}
             />
             <FormControl margin="dense" className="form-control">
               <InputLabel htmlFor="importance">Importance</InputLabel>
               <Select
                 native
                 value={this.state.importance}
-                onChange={this.handleChange('importance')}
-                inputProps={{id: 'importance'}}
-              >
-                <option value=""></option>
-                <option value="Usual">Usual</option>
+                name="importance"
+                onChange={this.handleChange}
+                inputProps={{id: 'importance'}}>
+                <option value="Usual"></option>
                 <option value="High priority">High priority</option>
                 <option value="The highest priority">The highest priority</option>
               </Select>
@@ -88,14 +109,16 @@ class DialogForm extends Component {
               type="date"
               value={this.state.date}
               InputLabelProps={{shrink: true}}
-              onChange={this.handleChange('date')}
+              name="date"
+              onChange={this.handleChange}
+              required
             />
             <DialogActions>
-              <Button onClick={this.props.dialogCLose} color="primary" type="button">
+              <Button onClick={() => this.props.dialogCLose()} color="primary" type="button">
                 Cancel
               </Button>
               <Button color="primary" type="submit">
-                Create
+                {isEditing? 'Confirm' : 'Create'}
               </Button>
             </DialogActions>
           </form>
@@ -104,4 +127,4 @@ class DialogForm extends Component {
   }
 }
 
-export default DialogForm;
+export default TodoForm;

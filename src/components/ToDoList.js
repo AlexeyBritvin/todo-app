@@ -10,11 +10,13 @@ class ToDoList extends Component {
           {
             this.props.todos.map((todo, index) => {
               return (
-              <ToDoItem key={todo.title}
+              <ToDoItem
+                key={todo.id}
                 index={index}
                 todo={todo}
                 deleteToDo={this.props.deleteToDo}
-                completeTask={this.props.completeTask} />
+                completeTask={this.props.completeTask}
+                openTodoForm={this.props.openTodoForm} />
               );
             })
           }
