@@ -55,6 +55,14 @@ class App extends Component {
 
   componentDidMount() {
     this.loadSamples();
+    const myStorage = localStorage.getItem('todos')
+    if (myStorage) {
+      this.setState({todos: JSON.parse(myStorage)});
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('todos', JSON.stringify(this.state.todos));
   }
 
   render() {
