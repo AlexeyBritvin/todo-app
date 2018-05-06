@@ -34,9 +34,16 @@ option {
   box-sizing: border-box;
 }
 
+.app .todo-title {
+  margin: 0 10px;
+}
+
+.app .add-todo {
+  margin-left: auto;
+}
+
 .flex-row {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   box-sizing: border-box;

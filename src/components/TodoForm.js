@@ -16,10 +16,10 @@ class TodoForm extends Component {
   state = {
     title: '',
     description: '',
-    importance: '',
+    importance: 'usual',
     date: '',
     complete: false
-   }
+  }
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
@@ -96,9 +96,10 @@ class TodoForm extends Component {
                 name="importance"
                 onChange={this.handleChange}
                 inputProps={{id: 'importance'}}>
-                <option value="Usual"></option>
-                <option value="High priority">High priority</option>
-                <option value="The highest priority">The highest priority</option>
+                <option value="usual"></option>
+                <option value="usual">Usual</option>
+                <option value="high priority">High priority</option>
+                <option value="the highest priority">The highest priority</option>
               </Select>
             </FormControl>
             <TextField

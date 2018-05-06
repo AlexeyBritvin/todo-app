@@ -21,8 +21,9 @@ class TodoItem extends Component {
           disableRipple
           checked={this.props.todo.complete}
         />
-        <ListItemText primary={this.props.todo.title} secondary={this.props.todo.description}>
-        <span className="todo-item__date">{this.props.todo.date}</span>
+        <ListItemText
+          primary={this.props.todo.title}
+          secondary={this.props.todo.date ? this.props.todo.date : this.props.todo.description}>
         </ListItemText>
         <ListItemSecondaryAction>
           <IconButton aria-label="edit" onClick={this.handleEditClick} >

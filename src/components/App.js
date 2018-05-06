@@ -8,6 +8,7 @@ import '../styles/App.css';
 class App extends Component {
   state = {
     todos: [],
+    filterCase: '',
     todoFormIsOpen: false,
     isEditing: false,
     editingTodo: null
@@ -53,6 +54,10 @@ class App extends Component {
     this.setState({ todoFormIsOpen: false });
   }
 
+  setFilterCase = (filterParam) => {
+    this.setState({ filterCase: filterParam.toLowerCase() });
+  }
+
   componentDidMount() {
     this.loadSamples();
     const myStorage = localStorage.getItem('todos')
@@ -68,12 +73,13 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Header openTodoForm={this.openTodoForm} />
+        <Header openTodoForm={this.openTodoForm} setFilterCase={this.setFilterCase}/>
         <ToDoList
           todos={this.state.todos}
           deleteToDo={this.deleteToDo}
           completeTask={this.completeTask}
-          openTodoForm={this.openTodoForm} />
+          openTodoForm={this.openTodoForm}
+          filterCase={this.state.filterCase} />
         {
           this.state.todoFormIsOpen
             ? <TodoForm

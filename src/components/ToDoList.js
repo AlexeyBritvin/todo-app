@@ -4,11 +4,25 @@ import ToDoItem from './ToDoItem';
 
 class ToDoList extends Component {
   render() {
+    const filterCase = this.props.filterCase;
+    const shownTodos = this.props.todos.filter(todo => {
+      switch(filterCase) {
+        case 'usual':
+          return todo.importance === 'usual';
+        case 'important':
+          return todo.importance === 'high priority';
+        case 'the most important':
+          return todo.importance === 'the highest priority';
+        default:
+         return todo;
+      }
+    });
+
     return (
       <div className="container">
         <List>
           {
-            this.props.todos.map((todo, index) => {
+            shownTodos.map((todo, index) => {
               return (
               <ToDoItem
                 key={todo.id}
