@@ -42,6 +42,10 @@ option {
   margin-left: auto;
 }
 
+.expired > p {
+  color: #f50057;
+}
+
 .flex-row {
   display: flex;
   align-items: center;

@@ -3,6 +3,7 @@ import ToDoList from './ToDoList';
 import Header from './Header';
 import TodoForm from './TodoForm';
 import todoSamples from '../samples';
+import { checkIfExpired } from '../helpers';
 import '../styles/App.css';
 
 class App extends Component {
@@ -59,10 +60,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.loadSamples();
     const myStorage = localStorage.getItem('todos')
     if (myStorage) {
       this.setState({todos: JSON.parse(myStorage)});
+    } else {
+      this.loadSamples();
     }
   }
 
@@ -71,6 +73,8 @@ class App extends Component {
   }
 
   render() {
+    checkIfExpired(this.state.todos);
+
     return (
       <div className="app">
         <Header openTodoForm={this.openTodoForm} setFilterCase={this.setFilterCase}/>

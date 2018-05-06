@@ -23,7 +23,8 @@ class TodoItem extends Component {
         />
         <ListItemText
           primary={this.props.todo.title}
-          secondary={this.props.todo.date ? this.props.todo.date : this.props.todo.description}>
+          secondary={this.props.todo.date ? this.props.todo.date : this.props.todo.description}
+          classes={this.props.todo.expired === true ? {root: 'expired'} : {root: ''}}>
         </ListItemText>
         <ListItemSecondaryAction>
           <IconButton aria-label="edit" onClick={this.handleEditClick} >
